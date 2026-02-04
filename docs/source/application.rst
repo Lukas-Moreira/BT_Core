@@ -8,4 +8,4 @@ It responsible for initializing Bluetooth and UDP services, managing their lifec
 .. autoclass:: BluPY.application.main.MainApp
    :members:
    :undoc-members:
-   :show-inheritance:
+   :inherited-members:
