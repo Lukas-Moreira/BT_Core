@@ -1,0 +1,373 @@
+import bluetooth # type: ignore
+import json
+import subprocess
+import re
+import time
+import os
+import netifaces # type: ignore
+
+class Config:
+    def __init__(self, type, ssid=None, pwd=None, ip=None, msk=None, gw=None):
+        self.type = type.lower()
+        self.ssid = ssid
+        self.pwd = pwd
+        self.ip = ip
+        self.msk = msk
+        self.gw = gw
+
+    def setConfig(self, client_sock=None):
+        handlers = {
+            "wi-fi": self._apply_wifi,
+            "cable": self._apply_cable,
+            "status": lambda: self._handle_status(client_sock),
+            "manutencao": self._handle_manutencao,
+            "teste": self._handle_teste,
+            "file": lambda:self.handle_file_transfer(client_sock)
+        }
+
+        print(f"[Config]: Tipo recebido = '{self.type}'")
+
+        handler = handlers.get(self.type)
+
+        if not handler:
+            print(f"[Config]: Tipo '{self.type}' não reconhecido")
+            return
+
+        print(f"[Config]: Executando handler para '{self.type}'")
+        handler()
+    
+    def _apply_wifi(self):
+        try:
+                print("[Config]: Aplicando configuração Wi-Fi...")
+
+                # Deleta conexões antigas com o mesmo nome (evita conflito)
+                try:
+                    subprocess.run(["sudo", "nmcli", "connection", "delete", self.ssid], check=False)
+                except subprocess.CalledProcessError as e:
+                    print(f"[Config]: Erro ao deletar conexões antigas: {e}")
+
+                # Cria nova conexão
+                subprocess.run([
+                    "sudo", "nmcli", "dev", "wifi",
+                    "connect", self.ssid, "password",
+                    self.pwd , "ifname", "wlan0"
+                ], check=True)
+
+                # Define IP estático
+                subnet = self.mask_to_cidr(self.msk)
+                subprocess.run([
+                    "sudo", "nmcli", "connection", "modify", self.ssid,
+                    "ifname", "wlan0", "ip4", f"{self.ip}/{subnet}",
+                    "gw4", self.gw, "ipv4.method", "manual"
+                ], check=True)
+
+                subprocess.run([
+                    "sudo", "nmcli", "connection", "up", self.ssid
+                ], check=True)
+
+                print("[Config]: Configuração aplicada com sucesso.")
+
+        except subprocess.CalledProcessError as e:
+            print(f"[Config]: Erro ao aplicar configuração: {e}")
+    
+    def _apply_cable(self):
+        try:
+                print("[Config]: Aplicando configuração Wi-Fi...")
+
+                try:
+                    subprocess.run(["sudo", "nmcli", "connection", "delete", "ETHEMPRESA"], check=False)
+                except subprocess.CalledProcessError as e:
+                    print(f"[Config]: Erro ao deletar conexões antigas: {e}")
+
+                # Cria nova conexão
+                subnet = self.mask_to_cidr(self.msk)
+                subprocess.run([
+                    "sudo", "nmcli", "con", "add",
+                    "type", "ethernet",
+                    "con-name", "ETHEMPRESA",
+                    "ifname", "eth0",
+                    "ip4", f"{self.ip}/{subnet}",
+                    "gw4", self.gw
+                ], check=True)
+
+                # Define IP estático
+                subprocess.run([
+                    "sudo", "nmcli", "con", "mod", "ETHEMPRESA",
+                    "ipv4.method", "manual"
+                ], check=True)
+
+                subprocess.run([
+                    "sudo", "nmcli", "connection", "up", "ETHEMPRESA"
+                ], check=True)
+
+                print("[Config]: Configuração aplicada com sucesso.")
+
+        except subprocess.CalledProcessError as e:
+            print(f"[Config]: Erro ao aplicar configuração: {e}")
+
+    
+    def _handle_status(self, client_sock):
+        print("[Config]: Status requisitado.")
+
+        try:
+            status_file = os.path.join(os.getcwd(), "ping_result.json")
+            if not os.path.exists(status_file):
+                print("[Config]: Arquivo de status não encontrado.")
+                return
+
+            with open(status_file, "r") as f1:
+                dados = json.load(f1)
+            
+            config_file = "/home/rock/Logs/coletor_data.json"
+            if not os.path.exists(config_file):
+                print("[Config]: Arquivo de configuração não encontrado.")
+                config_data = {}
+            else:
+                try:
+                    with open(config_file, "r") as f2:
+                        config_data = json.load(f2)
+                except Exception as e:
+                    print(f"[Config]: Erro ao ler arquivo de configuração: {e}")
+                    config_data = {}
+            
+            ip = Config.get_first_active_ip()
+
+            resposta = {
+                "ip": ip or "No IP address",
+                "success": "true" if dados.get("success") else "false",
+                "packet_loss": f"{min(100, max(0, float(dados.get('packet_loss_percent', 0)))):.2f}%",
+                "rtt_avg": f"{dados.get('rtt_avg_ms', 0)/100:.2f} ms",
+                "timestamp": dados.get("timestamp", ""),
+                "responses_ms": dados.get("responses_ms",[]),
+                "tipo_coletor": config_data.get("status",{}).get("tipo_coletor", "unknown"),
+                "versao_codigo": config_data.get("status",{}).get("versao_codigo", "unknown"),
+                "config": config_data.get("config", []) or "N/A"
+            }
+
+            print(f"[Config]: Resposta enviada: {resposta}")
+
+            # Envia o JSON como resposta ao cliente conectado
+            client_sock.send((json.dumps(resposta) + "\n").encode())
+
+        except Exception as e:
+            print(f"[Config]: Erro ao obter status: {e}")
+
+    def _handle_manutencao(self):
+        print("[Config]: Entrando em modo de manutenção...")
+
+    def _handle_teste(self):
+        print("[Config]: Modo de teste ativado.")
+
+        try:
+            subprocess.run([
+                    "sudo", "rm", "ping_result.json"
+                ], check=True)
+
+        except Exception as e:
+            print(f"[Config]: Erro ao executar teste de ping: {e}")
+
+        try:
+            result = subprocess.run(
+                ["ping", "-c", "51", "-i", "0.5", "-W", "0.5", self.ip],
+                capture_output=True,
+                text=True
+            )
+
+            output = result.stdout
+            # print("[Config]: Saída do ping:\n" + output)
+
+            # Extrair tempos individuais de resposta com regex
+            response_times = [
+                float(match.group(1))
+                for match in re.finditer(r'time=([\d.]+) ms', output)
+            ]
+
+            # Extrair perda de pacotes e RTT médio
+            packet_loss = re.search(r"([\d.]+)% packet loss", output)
+            rtt = re.search(r"rtt min/avg/max/mdev = [\d.]+/([\d.]+)", output)
+
+            ping_data = {
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "ip": self.ip,
+                "success": result.returncode == 0,
+                "packet_loss_percent": round(float(packet_loss.group(1)), 2) if packet_loss else 100.0,
+                "rtt_avg_ms": float(rtt.group(1)) if rtt else 0.0,
+                "responses_ms": response_times
+            }
+
+            file_path = os.path.join(os.getcwd(), "ping_result.json")
+            with open(file_path, "w") as f:
+                json.dump(ping_data, f, indent=4)
+
+            print(f"[Config]: Resultado salvo em {file_path}")
+
+        except Exception as e:
+            print(f"[Config]: Erro ao executar teste de ping: {e}")
+    
+    def handle_file_transfer(self, header: dict, client_sock):
+        file_name = header.get("name", "received_file.bin")
+        file_size = int(header.get("size", 0))
+
+        if file_size <= 0:
+            print("[FileTransfer]: Tamanho de arquivo inválido.")
+            return
+
+        print(f"[FileTransfer]: Iniciando recebimento do arquivo '{file_name}' ({file_size} bytes)")
+
+        try:
+            client_sock.send(b"ok")  # Confirma recebimento do cabeçalho
+
+            with open(file_name, "wb") as f:
+                total = 0
+                while total < file_size:
+                    chunk = client_sock.recv(min(1024, file_size - total))
+                    if not chunk:
+                        print("[FileTransfer]: Conexão encerrada durante recebimento.")
+                        return
+                    f.write(chunk)
+                    total += len(chunk)
+
+            # Verifica finalizador
+            eof = client_sock.recv(1024).decode().strip()
+            if eof == "--EOF--":
+                print(f"[FileTransfer]: Arquivo '{file_name}' recebido com sucesso.")
+                self.install_update()
+                print("[FileTransfer]: Atualização instalada com sucesso.")
+            else:
+                print("[FileTransfer]: Finalizador '--EOF--' não recebido corretamente.")
+
+        except Exception as e:
+            print(f"[FileTransfer]: Erro durante recebimento: {e}")
+    
+    @staticmethod
+    def install_update():
+
+        print("[Install_update]: Atualizando Coletor...")
+
+        try:
+            result = subprocess.run(["pidof", "coletor.o"], capture_output=True, check=True)
+            pid_str = result.stdout.decode().strip()  # Decodifica de bytes para string e remove '\n'
+
+            # Verifica se retornou algum PID
+            if pid_str:
+                subprocess.run(["sudo", "kill", pid_str], check=True)
+            else:
+                print("Processo 'coletor.o' não encontrado.")
+            
+            subprocess.run(["sudo", "systemctl", "stop",
+                            "rps-coletor-server.service"], check=True)
+            
+            subprocess.run(["sudo", "systemctl", "disable",
+                            "rps-coletor-server.service"], check=True)
+            
+            subprocess.run(["sudo", "rm", "/usr/bin/coletor.o"], check=True)
+
+            subprocess.run(["sudo", "mv", "/home/rock/coletor.o","/usr/bin/"], check=True)
+
+            subprocess.run(["sudo", "chmod", "777", "/usr/bin/coletor.o"], check=True)
+
+            subprocess.run(["sudo", "systemctl", "start",
+                            "rps-coletor-server.service"], check=True)
+            
+            subprocess.run(["sudo", "systemctl", "enable",
+                            "rps-coletor-server.service"], check=True)
+
+        except ValueError as e:
+            print(f"[Install_update]: Erro ao instalar atualização: {e}")
+            return
+
+    @staticmethod
+    def get_first_active_ip():
+        for iface in ["eth0", "wlan0"]:
+            try:
+                addrs = netifaces.ifaddresses(iface)
+                if netifaces.AF_INET in addrs:
+                    return addrs[netifaces.AF_INET][0]['addr']
+            except ValueError:
+                continue
+        return "No IP address"
+
+    @staticmethod
+    def mask_to_cidr(mask):
+        # Exemplo: /16 => 16 | 255.255.0.0 => 16
+        if "/" in mask:
+            return mask.replace("/", "")
+        parts = map(int, mask.split("."))
+        return sum(bin(p).count("1") for p in parts)
+
+
+def iniciar_servidor_bluetooth():
+    server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    port = 1
+
+    try:
+        server_sock.bind(("", port))
+        server_sock.listen(1)
+        print(f"[BluetoothServer]: Aguardando conexões no canal {port}...")
+
+        while True:
+            try:
+                client_sock, client_info = server_sock.accept()
+                print(f"[BluetoothServer]: Conectado a {client_info}")
+
+                while True:
+                    try:
+                        data = client_sock.recv(1024)
+                        if not data:
+                            print("[BluetoothServer]: Cliente desconectou.")
+                            break
+
+                        msg = data.decode().strip()
+                        print(f"[BluetoothServer]: Recebido -> {msg}")
+
+                        if msg.lower() == "by":
+                            print("[BluetoothServer]: Encerrando conexão com cliente.")
+                            break
+
+                        try:
+                            dados = json.loads(msg)
+                            print(f"[BluetoothServer]: JSON decodificado: {dados}")
+
+                            tipo = dados.get("type", "").lower()
+
+                            if tipo == "file":
+                                cfg = Config(type="file")
+                                cfg.handle_file_transfer(dados, client_sock)
+                            else:
+                                cfg = Config(
+                                    type=tipo,
+                                    ssid=dados.get("ssid", ""),
+                                    pwd=dados.get("password", ""),
+                                    ip=dados.get("ip", ""),
+                                    msk=dados.get("mask", ""),
+                                    gw=dados.get("gateway", "")
+                                )
+                                cfg.setConfig(client_sock=client_sock)
+
+                        except json.JSONDecodeError as e:
+                            print(f"[BluetoothServer]: Erro ao decodificar JSON: {e}")
+
+                        except KeyError as e:
+                            print(f"[BluetoothServer]: Chave ausente no JSON: {e}")
+
+                    except bluetooth.BluetoothError as e:
+                        print(f"[BluetoothServer]: Erro de comunicação: {e}")
+                        break
+
+                try:
+                    client_sock.close()
+                except:
+                    pass
+
+                print(f"[BluetoothServer]: Aguardando nova conexão no canal {port}...")
+
+            except bluetooth.BluetoothError as e:
+                print(f"[BluetoothServer]: Erro ao aceitar conexão: {e}")
+                break
+
+    finally:
+        print("[BluetoothServer]: Encerrando servidor Bluetooth.")
+        server_sock.close()
+
+if __name__ == "__main__":
+    iniciar_servidor_bluetooth()

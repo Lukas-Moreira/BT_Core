@@ -1,0 +1,6 @@
+# Ignore Python bytecode files
+__pycache__/
+
+# Ignore python cache
+__init__.py
+*/__init__.py

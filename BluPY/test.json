@@ -1,0 +1,13 @@
+{
+    "integracoes": {
+        "Integr_MQTT": {
+            "isAtivo": true,
+            "cfg": {
+                "single_Maq": true,
+                "maq_Cod_0": "12837481",
+                "maq_Cod_1": "12837482",
+                "servidor": "server"
+            }
+        }
+    }
+}
