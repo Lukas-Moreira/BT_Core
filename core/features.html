@@ -56,11 +56,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Network Configuration</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Features of BT_Core</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#status-collector">Status Collector</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#BluPY.config.status_handler.StatusHandler"><code class="docutils literal notranslate"><span class="pre">StatusHandler</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#BluPY.config.status_handler.StatusHandler.handle"><code class="docutils literal notranslate"><span class="pre">handle()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#status-collector">Status Collector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-connection">Test connection</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#BluPY.config.test_handler.TestHandler"><code class="docutils literal notranslate"><span class="pre">TestHandler()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#BluPY.config.test_handler.TestHandler.handle"><code class="docutils literal notranslate"><span class="pre">handle()</span></code></a></li>
@@ -111,32 +107,7 @@
 <h1>Features of BT_Core<a class="headerlink" href="#features-of-bt-core" title="Permalink to this heading"></a></h1>
 <section id="status-collector">
 <h2>Status Collector<a class="headerlink" href="#status-collector" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="BluPY.config.status_handler.StatusHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BluPY.config.status_handler.</span></span><span class="sig-name descname"><span class="pre">StatusHandler</span></span><a class="headerlink" href="#BluPY.config.status_handler.StatusHandler" title="Permalink to this definition"></a></dt>
-<dd><p>Class to handle the status of the collector. It reads the ping results and collector configuration,
-and sends information via Bluetooth.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>client_sock: Bluetooth client socket.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <p><strong>Methods:</strong></p>
-<dl class="py function">
-<dt class="sig sig-object py" id="BluPY.config.status_handler.StatusHandler.handle">
-<span class="sig-prename descclassname"><span class="pre">BluPY.config.status_handler.StatusHandler.</span></span><span class="sig-name descname"><span class="pre">handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_sock</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.status_handler.StatusHandler.handle" title="Permalink to this definition"></a></dt>
-<dd><p>Sends the status of the collector via Bluetooth.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>client_sock: Bluetooth client socket.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a client socket (this is just an example, in practice you would get this from the Bluetooth server)</span>
 <span class="n">client_sock</span><span class="p">,</span> <span class="n">client_info</span> <span class="o">=</span> <span class="n">server_sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
 

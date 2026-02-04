@@ -57,14 +57,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../core/configuration.html">Network Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core/features.html">Features of BT_Core</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utils for Network Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cidr-to-netmask">CIDR to Netmask</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#BluPY.config.base_config.BaseConfig.mask_to_cidr"><code class="docutils literal notranslate"><span class="pre">mask_to_cidr()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#get-first-active-ip">Get First Active IP</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#BluPY.config.base_config.BaseConfig.get_first_active_ip"><code class="docutils literal notranslate"><span class="pre">get_first_active_ip()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#cidr-to-netmask">CIDR to Netmask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-first-active-ip">Get First Active IP</a></li>
 </ul>
 </li>
 </ul>
@@ -102,12 +96,6 @@
 <p>This document provides examples and explanations for configuring network settings using the BluPY library.</p>
 <section id="cidr-to-netmask">
 <h2>CIDR to Netmask<a class="headerlink" href="#cidr-to-netmask" title="Permalink to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="BluPY.config.base_config.BaseConfig.mask_to_cidr">
-<span class="sig-prename descclassname"><span class="pre">BluPY.config.base_config.BaseConfig.</span></span><span class="sig-name descname"><span class="pre">mask_to_cidr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.base_config.BaseConfig.mask_to_cidr" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a subnet mask from dotted decimal format to CIDR notation.</p>
-</dd></dl>
-
 <p><strong>Implementation</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">BluPY.config.base_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseConfig</span>
 
@@ -119,12 +107,6 @@
 </section>
 <section id="get-first-active-ip">
 <h2>Get First Active IP<a class="headerlink" href="#get-first-active-ip" title="Permalink to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="BluPY.config.base_config.BaseConfig.get_first_active_ip">
-<span class="sig-prename descclassname"><span class="pre">BluPY.config.base_config.BaseConfig.</span></span><span class="sig-name descname"><span class="pre">get_first_active_ip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.base_config.BaseConfig.get_first_active_ip" title="Permalink to this definition"></a></dt>
-<dd><p>Obtains the first active IP address from network interfaces.</p>
-</dd></dl>
-
 <p><strong>Implementation</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">BluPY.config.base_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseConfig</span>
 

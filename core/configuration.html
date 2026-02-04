@@ -55,24 +55,8 @@
 <p class="caption" role="heading"><span class="caption-text">Core Modules:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Network Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cable-configuration">Cable Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#BluPY.config.cable_config.CableConfig"><code class="docutils literal notranslate"><span class="pre">CableConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#BluPY.config.cable_config.CableConfig.apply"><code class="docutils literal notranslate"><span class="pre">CableConfig.apply()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#BluPY.config.cable_config.CableConfig.get_first_active_ip"><code class="docutils literal notranslate"><span class="pre">CableConfig.get_first_active_ip()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#BluPY.config.cable_config.CableConfig.mask_to_cidr"><code class="docutils literal notranslate"><span class="pre">CableConfig.mask_to_cidr()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#wifi-configuration">Wifi Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#BluPY.config.wifi_config.WiFiConfig"><code class="docutils literal notranslate"><span class="pre">WiFiConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#BluPY.config.wifi_config.WiFiConfig.apply"><code class="docutils literal notranslate"><span class="pre">WiFiConfig.apply()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#BluPY.config.wifi_config.WiFiConfig.get_first_active_ip"><code class="docutils literal notranslate"><span class="pre">WiFiConfig.get_first_active_ip()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#BluPY.config.wifi_config.WiFiConfig.mask_to_cidr"><code class="docutils literal notranslate"><span class="pre">WiFiConfig.mask_to_cidr()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#cable-configuration">Cable Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wifi-configuration">Wifi Configuration</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features of BT_Core</a></li>
@@ -111,38 +95,6 @@
 <h1>Network Configuration<a class="headerlink" href="#network-configuration" title="Permalink to this heading"></a></h1>
 <section id="cable-configuration">
 <h2>Cable Configuration<a class="headerlink" href="#cable-configuration" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="BluPY.config.cable_config.CableConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BluPY.config.cable_config.</span></span><span class="sig-name descname"><span class="pre">CableConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.cable_config.CableConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Class to configure wired network connections using nmcli.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>ip   (str): Static IP address.</p></li>
-<li><p>msk  (str): Subnet mask.</p></li>
-<li><p>gw   (str): Default gateway.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="BluPY.config.cable_config.CableConfig.apply">
-<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.cable_config.CableConfig.apply" title="Permalink to this definition"></a></dt>
-<dd><p>Method to apply the wired network configuration.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="BluPY.config.cable_config.CableConfig.get_first_active_ip">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_first_active_ip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.cable_config.CableConfig.get_first_active_ip" title="Permalink to this definition"></a></dt>
-<dd><p>Obtains the first active IP address from network interfaces.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="BluPY.config.cable_config.CableConfig.mask_to_cidr">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask_to_cidr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.cable_config.CableConfig.mask_to_cidr" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a subnet mask from dotted decimal format to CIDR notation.</p>
-</dd></dl>
-
-</dd></dl>
-
 <p><strong>Example of usage:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a CableConfig instance with desired settings</span>
 <span class="n">config</span> <span class="o">=</span> <span class="n">CableConfig</span><span class="p">(</span>
@@ -170,40 +122,6 @@ subprocess.run<span class="o">([</span>
 </section>
 <section id="wifi-configuration">
 <h2>Wifi Configuration<a class="headerlink" href="#wifi-configuration" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="BluPY.config.wifi_config.WiFiConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BluPY.config.wifi_config.</span></span><span class="sig-name descname"><span class="pre">WiFiConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ssid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.wifi_config.WiFiConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Class to configure Wi-Fi settings on a Linux system using nmcli.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>ssid (str): Wi-Fi network name.</p></li>
-<li><p>pwd  (str): Wi-Fi network password.</p></li>
-<li><p>ip   (str): Static IP address.</p></li>
-<li><p>msk  (str): Subnet mask.</p></li>
-<li><p>gw   (str): Default gateway.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="BluPY.config.wifi_config.WiFiConfig.apply">
-<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.wifi_config.WiFiConfig.apply" title="Permalink to this definition"></a></dt>
-<dd><p>Apply the Wi-Fi configuration using nmcli.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="BluPY.config.wifi_config.WiFiConfig.get_first_active_ip">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_first_active_ip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.wifi_config.WiFiConfig.get_first_active_ip" title="Permalink to this definition"></a></dt>
-<dd><p>Obtains the first active IP address from network interfaces.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="BluPY.config.wifi_config.WiFiConfig.mask_to_cidr">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask_to_cidr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.config.wifi_config.WiFiConfig.mask_to_cidr" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a subnet mask from dotted decimal format to CIDR notation.</p>
-</dd></dl>
-
-</dd></dl>
-
 <p><strong>Example of usage:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a WifiConfig instance with desired settings</span>
 <span class="n">config</span> <span class="o">=</span> <span class="n">WifiConfig</span><span class="p">(</span>
