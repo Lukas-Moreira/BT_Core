@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Configuration &mdash; BT_Core 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=359c27e9"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Features of BT_Core" href="features.html" />
+    <link rel="prev" title="Listener UDP Service" href="../services/udp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BT_Core
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Application:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../source/application.html">Main Application</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Services:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../services/bluetooth.html">Bluetooth Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../services/tcp.html">Client TCP Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../services/udp.html">Listener UDP Service</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Network Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cable-configuration">Cable Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wifi-configuration">Wifi Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features of BT_Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/utils.html">Utils for Network Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">informations:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../releases/releases.html">Releases</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BT_Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Network Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/core/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="network-configuration">
+<h1>Network Configuration<a class="headerlink" href="#network-configuration" title="Permalink to this heading"></a></h1>
+<section id="cable-configuration">
+<h2>Cable Configuration<a class="headerlink" href="#cable-configuration" title="Permalink to this heading"></a></h2>
+<p><strong>Example of usage:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a CableConfig instance with desired settings</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">CableConfig</span><span class="p">(</span>
+    <span class="s2">&quot;192.168.1.100&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;192.168.1.1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Apply the configuration</span>
+<span class="n">config</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Example of implementation:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the subnet in CIDR notation from the subnet mask</span>
+<span class="nv">subnet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>self.mask_to_cidr<span class="o">(</span>self.msk<span class="o">)</span>
+
+<span class="c1"># Set configuration using nmcli</span>
+subprocess.run<span class="o">([</span>
+<span class="w">    </span><span class="s2">&quot;sudo&quot;</span>,<span class="w"> </span><span class="s2">&quot;nmcli&quot;</span>,<span class="w"> </span><span class="s2">&quot;con&quot;</span>,<span class="w"> </span><span class="s2">&quot;add&quot;</span>,<span class="w"> </span><span class="s2">&quot;type&quot;</span>,<span class="w"> </span><span class="s2">&quot;ethernet&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;con-name&quot;</span>,<span class="w"> </span><span class="s2">&quot;ETHEMPRESA&quot;</span>,<span class="w"> </span><span class="s2">&quot;ifname&quot;</span>,<span class="w"> </span><span class="s2">&quot;eth0&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;ip4&quot;</span>,<span class="w"> </span>f<span class="s2">&quot;{self.ip}/{subnet}&quot;</span>,<span class="w"> </span><span class="s2">&quot;gw4&quot;</span>,<span class="w"> </span>self.gw
+<span class="o">]</span>,<span class="w"> </span><span class="nv">check</span><span class="o">=</span>True<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="wifi-configuration">
+<h2>Wifi Configuration<a class="headerlink" href="#wifi-configuration" title="Permalink to this heading"></a></h2>
+<p><strong>Example of usage:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a WifiConfig instance with desired settings</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">WifiConfig</span><span class="p">(</span>
+    <span class="n">ssid</span><span class="o">=</span><span class="s2">&quot;MySSID&quot;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;MyPassword&quot;</span><span class="p">,</span>
+    <span class="n">ip</span><span class="o">=</span><span class="s2">&quot;192.168.1.100&quot;</span><span class="p">,</span>
+    <span class="n">msk</span><span class="o">=</span><span class="s2">&quot;255.255.255.0&quot;</span><span class="p">,</span>
+    <span class="n">gw</span><span class="o">=</span><span class="s2">&quot;192.168.1.1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Apply the configuration</span>
+<span class="n">config</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Example of implementation:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Connect to the WiFi network</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
+    <span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;nmcli&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;wifi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pwd</span> <span class="p">,</span> <span class="s2">&quot;ifname&quot;</span><span class="p">,</span> <span class="s2">&quot;wlan0&quot;</span>
+<span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Get the subnet in CIDR notation from the subnet mask</span>
+<span class="n">subnet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask_to_cidr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msk</span><span class="p">)</span>
+
+<span class="c1"># Set static IP configuration</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
+    <span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;nmcli&quot;</span><span class="p">,</span> <span class="s2">&quot;connection&quot;</span><span class="p">,</span> <span class="s2">&quot;modify&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span>
+    <span class="s2">&quot;ifname&quot;</span><span class="p">,</span> <span class="s2">&quot;wlan0&quot;</span><span class="p">,</span> <span class="s2">&quot;ip4&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">subnet</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gw4&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gw</span><span class="p">,</span> <span class="s2">&quot;ipv4.method&quot;</span><span class="p">,</span> <span class="s2">&quot;manual&quot;</span>
+<span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../services/udp.html" class="btn btn-neutral float-left" title="Listener UDP Service" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="features.html" class="btn btn-neutral float-right" title="Features of BT_Core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Lukas L. Moreira.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
