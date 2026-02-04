@@ -1,0 +1,7 @@
+MAIN APPLICATION
+=================
+
+.. autoclass:: BluPY.application.main.MainApp
+   :members:
+   :undoc-members:
+   :show-inheritance:
