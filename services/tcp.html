@@ -49,7 +49,14 @@
 <p class="caption" role="heading"><span class="caption-text">Services:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Bluetooth Service</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Client TCP Service</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Client TCP Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#BluPY.services.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BluPY.services.tcp_client.TcpClient.define_datetime"><code class="docutils literal notranslate"><span class="pre">TcpClient.define_datetime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BluPY.services.tcp_client.TcpClient.get_datetime_now"><code class="docutils literal notranslate"><span class="pre">TcpClient.get_datetime_now()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="udp.html">Listener UDP Service</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Core Modules:</span></p>
@@ -89,6 +96,38 @@
              
   <section id="client-tcp-service">
 <h1>Client TCP Service<a class="headerlink" href="#client-tcp-service" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="BluPY.services.tcp_client.TcpClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BluPY.services.tcp_client.</span></span><span class="sig-name descname"><span class="pre">TcpClient</span></span><a class="headerlink" href="#BluPY.services.tcp_client.TcpClient" title="Permalink to this definition"></a></dt>
+<dd><p>Classe responsável por realizar requisições HTTP para obter a data e hora atual de um servidor remoto.
+Methods</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="BluPY.services.tcp_client.TcpClient.define_datetime">
+<span class="sig-name descname"><span class="pre">define_datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datetime_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.services.tcp_client.TcpClient.define_datetime" title="Permalink to this definition"></a></dt>
+<dd><p>Define a data e hora do sistema com base na string fornecida.</p>
+<dl class="simple">
+<dt>Parâmetros:</dt><dd><ul class="simple">
+<li><p>datetime_str (str): String representando a data e hora no formato ‘YYYY-MM-DD HH:MM:SS’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BluPY.services.tcp_client.TcpClient.get_datetime_now">
+<span class="sig-name descname"><span class="pre">get_datetime_now</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9050</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.services.tcp_client.TcpClient.get_datetime_now" title="Permalink to this definition"></a></dt>
+<dd><p>Realiza uma requisição HTTP para obter a data e hora atual do servidor especificado.
+Parâmetros:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>host (str): Endereço IP ou hostname do servidor.</p></li>
+<li><p>port (int): Porta do servidor HTTP (padrão: 9050).</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

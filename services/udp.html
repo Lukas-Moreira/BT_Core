@@ -50,7 +50,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Bluetooth Service</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tcp.html">Client TCP Service</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Listener UDP Service</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Listener UDP Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#BluPY.services.udp_listener.UdpListenerConfig"><code class="docutils literal notranslate"><span class="pre">UdpListenerConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BluPY.services.udp_listener.UdpListenerConfig.listen_for_broadcasts"><code class="docutils literal notranslate"><span class="pre">UdpListenerConfig.listen_for_broadcasts()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Core Modules:</span></p>
 <ul>
@@ -89,6 +95,25 @@
              
   <section id="listener-udp-service">
 <h1>Listener UDP Service<a class="headerlink" href="#listener-udp-service" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="BluPY.services.udp_listener.UdpListenerConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BluPY.services.udp_listener.</span></span><span class="sig-name descname"><span class="pre">UdpListenerConfig</span></span><a class="headerlink" href="#BluPY.services.udp_listener.UdpListenerConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Classe para ouvir broadcasts UDP e interagir com TcpClient.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="BluPY.services.udp_listener.UdpListenerConfig.listen_for_broadcasts">
+<span class="sig-name descname"><span class="pre">listen_for_broadcasts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9050</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bufsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1024</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BluPY.services.udp_listener.UdpListenerConfig.listen_for_broadcasts" title="Permalink to this definition"></a></dt>
+<dd><p>Ouve broadcasts UDP na porta especificada.</p>
+<dl class="simple">
+<dt>Parâmetros:</dt><dd><ul class="simple">
+<li><p>port (int): Porta para ouvir broadcasts UDP.</p></li>
+<li><p>bufsize (int): Tamanho do buffer para receber mensagens.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
