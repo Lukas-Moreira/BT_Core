@@ -5,6 +5,7 @@ Cable Configuration
 -------------------
 
 .. autoclass:: BluPY.config.cable_config.CableConfig
+    :inherited-members:
 
 **Example of usage:**
 
@@ -21,6 +22,7 @@ Cable Configuration
     config.apply()
 
 .. autofunction:: BluPY.config.cable_config.CableConfig.apply
+    :inherited-members:
 
 **Example of implementation:**
 
@@ -41,6 +43,7 @@ Wifi Configuration
 ------------------
 
 .. autoclass:: BluPY.config.wifi_config.WiFiConfig
+    :inherited-members:
 
 **Example of usage:**
 
@@ -59,6 +62,7 @@ Wifi Configuration
     config.apply()
 
 .. autofunction:: BluPY.config.wifi_config.WiFiConfig.apply
+    :inherited-members:
 
 **Example of implementation:**
 
