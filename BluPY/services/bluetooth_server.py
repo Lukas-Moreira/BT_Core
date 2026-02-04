@@ -14,8 +14,8 @@ def handle_config(dados, client_sock):
     Função para lidar com a configuração recebida via Bluetooth.
 
     Parâmetros:
-    dados (dict): Dicionário contendo os dados de configuração.
-    client_sock: Socket do cliente Bluetooth.
+        - dados (dict): Dicionário contendo os dados de configuração.
+        - client_sock: Socket do cliente Bluetooth.
     '''
     tipo = dados.get("type", "").lower()
 

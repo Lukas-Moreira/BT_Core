@@ -17,7 +17,7 @@ release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-autodoc_mock_imports = ["nmcli", "subprocess", "bluetooth", "netifaces"]
+# autodoc_mock_imports = ["nmcli", "subprocess", "bluetooth", "netifaces"]
 
 extensions = [
     'sphinx.ext.duration',
